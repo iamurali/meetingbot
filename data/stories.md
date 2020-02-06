@@ -50,3 +50,22 @@
     - action_fetch_meetings
 * stop
     - utter_goodbye
+
+## interactive_story_2
+* greet
+    - utter_greet
+* fetch_meetings
+    - action_fetch_meetings
+
+## interactive_story_3
+* affirm
+    - utter_greet
+
+## interactive_story_4
+* affirm
+    - utter_greet
+* fetch_meetings
+    - action_fetch_meetings
+## interactive_story_1
+* fetch_meetings
+    - action_fetch_meetings

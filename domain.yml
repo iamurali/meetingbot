@@ -5,14 +5,12 @@ actions:
 - utter_goodbye
 - utter_greet
 intents:
-- stop
-- greet
 - fetch_meetings
-- goodbye
 - affirm
+- greet
+- goodbye
 - deny
 - utter_ask_howcanhelp
-
 responses:
   utter_ask_howcanhelp:
   - text: How can i help you?

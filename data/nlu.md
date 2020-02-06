@@ -19,6 +19,8 @@
 - of course
 - that sounds good
 - correct
+- are you a bot?
+- hello is anybody there
 
 ## intent:deny
 - no
@@ -48,3 +50,6 @@
 - my calendar now
 - What's today agendas
 - my schedule for today
+- Fetch my availability for today
+- Fetch My Appointments for today
+- Fetch My Appointments for Tomorrow
