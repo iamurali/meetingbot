@@ -14,6 +14,8 @@ intents:
 - deny
 - iamgood
 - howareyou
+- stop
+- utter_ask_howcanhelp
 responses:
   utter_ask_howcanhelp:
   - text: How can i help you?
