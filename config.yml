@@ -11,9 +11,10 @@ policies:
   - name: MappingPolicy
 
 pipeline:
-  - name: "SpacyNLP"
-  - name: "SpacyTokenizer"
-  - name: "SpacyFeaturizer"
-  - name: "SklearnIntentClassifier"
-  - name: "CRFEntityExtractor"
-  - name: "EntitySynonymMapper"
+  - name: WhitespaceTokenizer
+  - name: SpacyNLP
+  - name: SpacyTokenizer
+  - name: SpacyFeaturizer
+  - name: SklearnIntentClassifier
+  - name: CRFEntityExtractor
+  - name: EntitySynonymMapper

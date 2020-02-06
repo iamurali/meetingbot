@@ -18,35 +18,35 @@
 * greet
   - utter_greet
   - utter_ask_howcanhelp
-* fetc_hmeetings
+* fetch_meetings
   - action_fetch_meetings
 
 ## Fetch schedule
 * greet
   - utter_greet
-* fetc_hmeetings
-  - action_fetch_meetings
-
-## Fetch schedule
-* greet
-  - utter_greet
-  - utter_ask_howcanhelp
-* fetc_hmeetings
+* fetch_meetings
   - action_fetch_meetings
 
 ## Fetch schedule
 * greet
   - utter_greet
   - utter_ask_howcanhelp
-* fetc_hmeetings
+* fetch_meetings
+  - action_fetch_meetings
+
+## Fetch schedule
+* greet
+  - utter_greet
+  - utter_ask_howcanhelp
+* fetch_meetings
   - action_fetch_meetings
 
 ## interactive_story_1
-* fetc_hmeetings
+* fetch_meetings
     - action_fetch_meetings
 * greet
     - utter_greet
-* fetc_hmeetings
+* fetch_meetings
     - action_fetch_meetings
 * stop
     - utter_goodbye

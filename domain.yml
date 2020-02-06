@@ -7,7 +7,7 @@ actions:
 intents:
 - stop
 - greet
-- fetc_hmeetings
+- fetch_meetings
 - goodbye
 - affirm
 - deny
@@ -28,5 +28,8 @@ session_config:
   carry_over_slots_to_new_session: true
   session_expiration_time: 60
 slots:
-  schedule:
-    type: list
+  date:
+    type: unfeaturized
+    auto_fill: false
+# forms:
+#   - meeting_request_form
