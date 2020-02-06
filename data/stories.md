@@ -84,3 +84,20 @@
   - utter_greet
 * sad
   - utter_cheer_up
+
+## MeetingPeople
+* greet
+  - utter_greet
+* who_all_am_i_meeting
+  - action_fetch_my_customer
+## interactive_story_1
+* who_all_am_i_meeting
+    - action_fetch_my_customer
+
+## interactive_story_1
+* who_all_am_i_meeting
+    - action_fetch_my_customer
+
+## interactive_story_1
+* who_all_am_i_meeting
+    - action_fetch_my_customer

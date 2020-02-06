@@ -1,11 +1,13 @@
 actions:
 - action_fetch_meetings
+- action_fetch_my_customer
 - utter_ask_howcanhelp
 - utter_botgood
 - utter_cheer_up
 - utter_goodbye
 - utter_greet
 intents:
+- who_all_am_i_meeting
 - greet
 - sad
 - fetch_meetings

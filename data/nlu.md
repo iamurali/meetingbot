@@ -97,3 +97,10 @@
 - By chance do you know the date of next event?
 - i want to book a appointment
 
+## intent:who_all_am_i_meeting
+- whom all i am meeting today?
+- which customer am i meeting today?
+- which customers am i meeting Feb 9th 2020
+- who is my customers today?
+- who am i meeting tomorrow
+- Which client i'm meeting on Feb 09 2020?
