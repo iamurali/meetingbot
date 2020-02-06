@@ -48,6 +48,7 @@
 - how can i help you ?
 - is there anything that i can help ?
 - may i help
+- How can i help you?
 
 ## intent:howareyou
 - How are you doing?

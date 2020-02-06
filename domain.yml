@@ -8,9 +8,10 @@ actions:
 - utter_greet
 intents:
 - who_all_am_i_meeting
+- utter_ask_howcanhelp
 - greet
-- sad
 - fetch_meetings
+- sad
 - affirm
 - goodbye
 - deny
