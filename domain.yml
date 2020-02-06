@@ -1,13 +1,26 @@
 actions:
+- action_create_meeting
 - action_fetch_meetings
 - utter_ask_howcanhelp
+- utter_ask_meetingdate
+- utter_ask_room
+- utter_ask_time
 - utter_botgood
 - utter_cheer_up
+- utter_default
 - utter_goodbye
 - utter_greet
+entities:
+- meetingdate
+- room
+- time
 intents:
-- utter_ask_howcanhelp
+- request_meeting
+- timeChoose
+- roomChoose
+- meetingdateChoose
 - greet
+- stop
 - fetch_meetings
 - sad
 - affirm
@@ -15,7 +28,6 @@ intents:
 - deny
 - iamgood
 - howareyou
-- stop
 - utter_ask_howcanhelp
 responses:
   utter_ask_howcanhelp:
@@ -25,6 +37,27 @@ responses:
   - text: What could I do to be helpful?
   - text: I may be able to help?
   - text: can we be of assistance?
+  utter_ask_meetingdate:
+  - buttons:
+    - payload: '/meetingdateChoose{"meetingdate": "21-02-2020"}'
+      title: xyz
+    - payload: '/meetingdateChoose{"meetingdate": "22-02-2020"}'
+      title: xyz
+    text: Choose date
+  utter_ask_room:
+  - buttons:
+    - payload: '/roomChoose{"room": "Room1"}'
+      title: xyz
+    - payload: '/roomChoose{"room": "Room2"}'
+      title: xyz
+    text: Choose room
+  utter_ask_time:
+  - buttons:
+    - payload: '/timeChoose{"time": "12:00"}'
+      title: 12:00
+    - payload: '/timeChoose{"time": "13:00"}'
+      title: 13:00
+    text: Choose the time
   utter_botgood:
   - text: I am doing good
   - text: I am all right
@@ -35,6 +68,8 @@ responses:
   utter_cheer_up:
   - image: https://i.imgur.com/nGF1K8f.jpg
     text: 'Here is something to cheer you up:'
+  utter_default:
+  - text: Totes soz, I don't understand what you mean there, can you rephrase please?
   utter_goodbye:
   - text: Bye
   - text: goodbye
@@ -51,6 +86,10 @@ session_config:
   carry_over_slots_to_new_session: true
   session_expiration_time: 60
 slots:
-  date:
+  meetingdate:
     auto_fill: false
+    type: unfeaturized
+  room:
+    type: unfeaturized
+  time:
     type: unfeaturized

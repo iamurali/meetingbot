@@ -97,3 +97,11 @@
 - What kinds of events do you host here?
 - By chance do you know the date of next event?
 - i want to book a appointment
+
+## intent:request_meeting
+- i am looking to schedule a meeting
+- make an appointment
+- arrange a meeting
+- I want to schedule a meeting
+- please schedule a meeting
+- schedule a meeting

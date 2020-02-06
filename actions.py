@@ -26,13 +26,17 @@
 #
 #         return []
 
+from typing import Dict, Text, Any, List, Union, Optional
 from rasa_sdk import Action
 import os
 import logging
 import pprint, json
-from rasa_sdk.events import SlotSet
+from rasa_sdk import Tracker
+from rasa_sdk.executor import CollectingDispatcher
 from timefhuman import timefhuman
 import requests
+from rasa_sdk.events import SlotSet
+from rasa_sdk.forms import FormAction
 
 logger = logging.getLogger(__name__)
 
@@ -68,9 +72,44 @@ class ActionFetchMeetings(Action):
           msg = " meeting: " + y["meeting_with"] + " " + y["location"] + " \n " + msg
       else:
         msg = "No meetings found !!"
-    
+
     except:
       msg = "Please try to frame the meeting date in another format"
 
     dispatcher.utter_message(msg)
     return []
+
+class ActionCreateMeeting(Action):
+  def name(self):
+    return 'action_create_meeting'
+
+  def run(self, dispatcher, tracker, domain):
+    print(tracker.get_slot('date'))
+    logger.warn(tracker.get_slot('meetingdate'))
+    logger.warn(tracker.get_slot('time'))
+    logger.warn(tracker.get_slot('room'))
+    msg = "Please try to frame the meeting date in another format"
+    dispatcher.utter_message(msg)
+    return []
+
+# class MeetingRequestForm(FormAction):
+#   def name(self):
+#     return 'meeting_request_form'
+
+#   @staticmethod
+#   def required_slots(tracker: Tracker) -> List[Text]:
+#     return ['date', 'time']
+
+
+#   def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+#     return {
+#       "date": self.from_entity(entity="date"),
+#       "time": self.from_entity(entity="time")
+#     }
+
+#   def submit(self, dispatcher: CollectingDispatcher,
+#                tracker: Tracker,
+#                domain: Dict[Text, Any]) -> List[Dict]:
+#         logger.warn(tracker)
+#         dispatcher.utter_template('utter_submit', tracker)
+#         return []
