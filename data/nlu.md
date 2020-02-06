@@ -48,6 +48,7 @@
 - how can i help you ?
 - is there anything that i can help ?
 - may i help
+- How can i help you?
 
 ## intent:howareyou
 - How are you doing?
@@ -96,4 +97,3 @@
 - What kinds of events do you host here?
 - By chance do you know the date of next event?
 - i want to book a appointment
-

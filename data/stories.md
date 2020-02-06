@@ -79,8 +79,20 @@
   - utter_ask_howcanhelp
 
 ## BotEnquariy
-
 * greet
   - utter_greet
 * sad
   - utter_cheer_up
+
+## interactive_story_1
+* fetch_meetings
+    - action_fetch_meetings
+
+## interactive_story_1
+* greet
+    - utter_greet
+* utter_ask_howcanhelp
+    - action_fetch_meetings
+    - utter_cheer_up
+* fetch_meetings
+    - action_fetch_meetings
