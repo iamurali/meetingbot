@@ -1,33 +1,53 @@
 actions:
 - action_fetch_meetings
 - utter_ask_howcanhelp
+- utter_botgood
 - utter_cheer_up
 - utter_goodbye
 - utter_greet
 intents:
+- greet
+- sad
 - fetch_meetings
 - affirm
-- greet
 - goodbye
 - deny
-- utter_ask_howcanhelp
+- iamgood
+- howareyou
 responses:
   utter_ask_howcanhelp:
   - text: How can i help you?
+  - text: In what ways can I help?
+  - text: Is there a way I can assist?
+  - text: What could I do to be helpful?
+  - text: I may be able to help?
+  - text: can we be of assistance?
+  utter_botgood:
+  - text: I am doing good
+  - text: I am all right
+  - text: I am doing all right
+  - text: I'm doing fine
+  - text: I am so good
+  - text: I am great
   utter_cheer_up:
   - image: https://i.imgur.com/nGF1K8f.jpg
     text: 'Here is something to cheer you up:'
   utter_goodbye:
   - text: Bye
+  - text: goodbye
+  - text: see you
+  - text: see you soon
+  - text: have a nice day
+  - text: keep in touch
   utter_greet:
   - text: Hey! How are you?
+  - text: How are you doing?
+  - text: How you doing?
   - text: Helloww! How are you doing today?
 session_config:
   carry_over_slots_to_new_session: true
   session_expiration_time: 60
 slots:
   date:
-    type: unfeaturized
     auto_fill: false
-# forms:
-#   - meeting_request_form
+    type: unfeaturized
