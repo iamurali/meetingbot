@@ -1,24 +1,11 @@
-actions:
-- action_create_meeting
-- action_fetch_meetings
-- utter_ask_howcanhelp
-- utter_ask_meetingdate
-- utter_ask_room
-- utter_ask_time
-- utter_botgood
-- utter_cheer_up
-- utter_default
-- utter_goodbye
-- utter_greet
-entities:
-- meetingdate
-- room
-- time
+session_config:
+  session_expiration_time: 60.0
+  carry_over_slots_to_new_session: true
 intents:
-- request_meeting
 - timeChoose
 - roomChoose
-- meetingdateChoose
+- request_meeting
+- dateChoose
 - greet
 - stop
 - fetch_meetings
@@ -29,6 +16,18 @@ intents:
 - iamgood
 - howareyou
 - utter_ask_howcanhelp
+entities:
+- date
+- room
+- time
+slots:
+  date:
+    type: unfeaturized
+    auto_fill: false
+  room:
+    type: unfeaturized
+  time:
+    type: unfeaturized
 responses:
   utter_ask_howcanhelp:
   - text: How can i help you?
@@ -37,27 +36,6 @@ responses:
   - text: What could I do to be helpful?
   - text: I may be able to help?
   - text: can we be of assistance?
-  utter_ask_meetingdate:
-  - buttons:
-    - payload: '/meetingdateChoose{"meetingdate": "21-02-2020"}'
-      title: xyz
-    - payload: '/meetingdateChoose{"meetingdate": "22-02-2020"}'
-      title: xyz
-    text: Choose date
-  utter_ask_room:
-  - buttons:
-    - payload: '/roomChoose{"room": "Room1"}'
-      title: xyz
-    - payload: '/roomChoose{"room": "Room2"}'
-      title: xyz
-    text: Choose room
-  utter_ask_time:
-  - buttons:
-    - payload: '/timeChoose{"time": "12:00"}'
-      title: 12:00
-    - payload: '/timeChoose{"time": "13:00"}'
-      title: 13:00
-    text: Choose the time
   utter_botgood:
   - text: I am doing good
   - text: I am all right
@@ -70,6 +48,8 @@ responses:
     text: 'Here is something to cheer you up:'
   utter_default:
   - text: Totes soz, I don't understand what you mean there, can you rephrase please?
+  utter_choose_room:
+  - text: please choose room
   utter_goodbye:
   - text: Bye
   - text: goodbye
@@ -82,14 +62,16 @@ responses:
   - text: How are you doing?
   - text: How you doing?
   - text: Helloww! How are you doing today?
-session_config:
-  carry_over_slots_to_new_session: true
-  session_expiration_time: 60
-slots:
-  meetingdate:
-    auto_fill: false
-    type: unfeaturized
-  room:
-    type: unfeaturized
-  time:
-    type: unfeaturized
+actions:
+- action_ask_meetingdate
+- action_ask_meetingtime
+- action_create_meeting
+- action_fetch_meetings
+- action_fetch_rooms
+- utter_choose_room
+- utter_ask_howcanhelp
+- utter_botgood
+- utter_cheer_up
+- utter_default
+- utter_goodbye
+- utter_greet

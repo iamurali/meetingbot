@@ -105,3 +105,6 @@
 - I want to schedule a meeting
 - please schedule a meeting
 - schedule a meeting
+- please schedule new meeting
+- i would like to have new appoinment
+- please schdule new meeting

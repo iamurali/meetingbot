@@ -101,13 +101,14 @@
 * greet
   - utter_greet
 * request_meeting
-  - utter_ask_meetingdate
-* meetingdateChoose{"meetingdate": "20/02/2020"}
-  - slot{"meetingdate": "20/02/2020"}
-  - utter_ask_time
+  - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+  - slot{"date": "02-01-2020"}
+  - action_ask_meetingtime
 * timeChoose{"time": "12:00"}
   - slot{"time": "12:00"}
-  - utter_ask_room
+  - utter_choose_room
+  - action_fetch_rooms
 * roomChoose{"room": "room1"}
   - slot{"room": "xyz"}
   - action_create_meeting
@@ -116,65 +117,164 @@
 * greet
   - utter_greet
 * request_meeting
-  - utter_ask_meetingdate
-* meetingdateChoose{"meetingdate": "21/02/2020"}
-  - slot{"meetingdate": "21/02/2020"}
-  - utter_ask_time
+  - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+  - slot{"date": "02-01-2020"}
+  - action_ask_meetingtime
 * timeChoose{"time": "12:00"}
   - slot{"time": "12:00"}
-  - utter_ask_room
+  - utter_choose_room
+  - action_fetch_rooms
 * roomChoose{"room": "room2"}
   - slot{"room": "xyz"}
   - action_create_meeting
 
 ## Date time
 * request_meeting
-  - utter_ask_meetingdate
-* meetingdateChoose{"meetingdate": "21-02-2020"}
-  - slot{"meetingdate": "21-02-2020"}
-  - utter_ask_time
+  - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+  - slot{"date": "02-01-2020"}
+  - action_ask_meetingtime
 * timeChoose{"time": "13:00"}
   - slot{"time": "13:00"}
-  - utter_ask_room
+  - utter_choose_room
+  - action_fetch_rooms
 * roomChoose{"room": "room2"}
   - slot{"room": "xyz"}
   - action_create_meeting
 
 ## interactive_story_1
 * request_meeting
-    - utter_ask_meetingdate
-* meetingdateChoose{"meetingdate": "21/02/2020"}
-  - slot{"meetingdate": "21/02/2020"}
-  - utter_ask_time
+    - action_ask_meetingtime
 * timeChoose{"time": "12:00"}
     - slot{"time": "12:00"}
-    - utter_ask_room
+    - utter_choose_room
+    - action_fetch_rooms
 * roomChoose{"room": "Room2"}
     - slot{"room": "Room2"}
     - action_create_meeting
 
 ## interactive_story_1
 * request_meeting
-    - utter_ask_meetingdate
-* meetingdateChoose{"meetingdate": "21/02/2020"}
-    - slot{"meetingdate": "21/02/2020"}
-    - utter_ask_time
+    - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+    - slot{"date": "02-01-2020"}
+    - action_ask_meetingtime
 * timeChoose{"time": "13:00"}
     - slot{"time": "13:00"}
-    - utter_ask_room
+    - utter_choose_room
+    - action_fetch_rooms
 * roomChoose{"room": "Room2"}
     - slot{"room": "Room2"}
     - action_create_meeting
 
 ## interactive_story_1
 * request_meeting
-    - utter_ask_meetingdate
-* meetingdateChoose{"meetingdate": "21/02/2020"}
-    - slot{"meetingdate": "21/02/2020"}
-    - utter_ask_time
+    - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+    - slot{"date": "02-01-2020"}
+    - action_ask_meetingtime
 * timeChoose{"time": "13:00"}
     - slot{"time": "13:00"}
-    - utter_ask_room
+    - utter_choose_room
+    - action_fetch_rooms
 * roomChoose{"room": "Room2"}
     - slot{"room": "Room2"}
+    - action_create_meeting
+
+## interactive_story_1
+* request_meeting
+    - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+    - slot{"date": "02-01-2020"}
+    - action_ask_meetingtime
+* timeChoose{"time": "22:00"}
+- utter_choose_room
+    - action_fetch_rooms
+* roomChoose{"room": "Room2"}
+    - slot{"room": "Room2"}
+    - action_create_meeting
+
+## interactive_story_1
+* request_meeting
+    - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+    - slot{"date": "02-01-2020"}
+    - action_ask_meetingtime
+* timeChoose{"time": "22:00"}
+    - slot{"time": "22:00"}
+    - utter_choose_room
+    - action_fetch_rooms
+* roomChoose{"room": "Room2"}
+    - slot{"room": "Room2"}
+    - action_create_meeting
+
+## interactive_story_1
+* request_meeting
+    - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+    - slot{"date": "02-01-2020"}
+    - action_ask_meetingtime
+* timeChoose{"time": "22:00"}
+    - slot{"time": "22:00"}
+    - utter_choose_room
+    - action_fetch_rooms
+* roomChoose{"room": "Room2"}
+    - slot{"room": "Room2"}
+    - action_create_meeting
+
+## interactive_story_1
+* request_meeting
+    - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+    - slot{"date": "02-01-2020"}
+    - action_ask_meetingtime
+* timeChoose{"time": "22:00"}
+    - slot{"time": "22:00"}
+    - utter_choose_room
+    - action_fetch_rooms
+* roomChoose{"room": "Room2"}
+    - slot{"room": "Room2"}
+    - action_create_meeting
+
+## interactive_story_1
+* request_meeting
+    - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+    - slot{"date": "02-01-2020"}
+    - action_ask_meetingtime
+* timeChoose{"time": "22:00"}
+    - slot{"time": "22:00"}
+    - utter_choose_room
+    - action_fetch_rooms
+* timeChoose{"room": "Room1"}
+    - slot{"room": "Room1"}
+    - action_create_meeting
+
+## interactive_story_1
+* request_meeting
+    - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+    - slot{"date": "02-01-2020"}
+    - action_ask_meetingtime
+* timeChoose{"time": "22:00"}
+    - slot{"time": "22:00"}
+    - utter_choose_room
+    - action_fetch_rooms
+* timeChoose{"room": "Room1"}
+    - slot{"room": "Room1"}
+    - action_create_meeting
+
+## interactive_story_1
+* request_meeting
+    - action_ask_meetingdate
+* dateChoose{"date": "02-01-2020"}
+    - slot{"date": "02-01-2020"}
+    - action_ask_meetingtime
+* timeChoose{"time": "22:00"}
+    - slot{"time": "22:00"}
+    - utter_choose_room
+    - action_fetch_rooms
+* roomChoose{"room": "Room1"}
+    - slot{"room": "Room1"}
     - action_create_meeting
