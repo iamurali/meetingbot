@@ -146,7 +146,27 @@ class ActionAskMeetingdate(Action):
 
   def run(self, dispatcher, tracker, domain):
     message_title = 'Please choose Meeting Date'
-    event_dates = [{"title": "21/02/2020", "payload": '/avaialabilityChoose{"avaialability": "21/02/2020"}'}, {"title": "22/02/2020", "payload": '/avaialabilityChoose{"avaialability": "22/02/2020"}'}]
+
+    url = "https://light.jntesting.net/api/mergetest/event_info?basic_info=true"
+    response = CompanyClient().get(url, {}, "harshal.jain@jifflenow.com")
+
+    #event_dates = [{"title": "21/02/2020", "payload": '/avaialabilityChoose{"avaialability": "21/02/2020"}'}, {"title": "22/02/2020", "payload": '/avaialabilityChoose{"avaialability": "22/02/2020"}'}]
+
+    start_date = response["data"]["event"]["start_date"]
+    start_date = datetime.strptime(start_date, '%Y-%m-%d')
+
+    end_date = response["data"]["event"]["end_date"]
+    end_date =  datetime.strptime(end_date, '%Y-%m-%d')
+
+    event_dates = []
+    for n in range(int ((end_date - start_date).days)):
+      date = start_date + timedelta(n)
+      date = date.strftime("%d/%m/%Y")
+      _h = {}
+      _h["title"] = date
+      _h["payload"] = '/avaialabilityChoose{"avaialability":' + '"' +str(date)+ '"}'
+      event_dates.append(_h)
+
     dispatcher.utter_message(text=message_title, buttons=event_dates)
     return []
 
@@ -155,6 +175,15 @@ class ActionAskMeetingTime(Action):
     return 'action_ask_meetingtime'
 
   def run(self, dispatcher, tracker, domain):
+
+  # book_meeting: "true"
+  # activity_uuid: "Gp72-KVfWIBz6rmsDT1q8A"
+  # location_preference: {}
+  # include_unavailable_resources: true
+
+
+
+
     message_title = 'Please choose Meeting time'
     meeting_times = [{"title": "21:00", "payload": '/timeChoose{"time": "22:00"}'}, {"title": "22:00", "payload": '/timeChoose{"time": "22:00"}'}]
     dispatcher.utter_message(text=message_title, buttons=meeting_times)
