@@ -5,7 +5,7 @@ intents:
 - timeChoose
 - roomChoose
 - request_meeting
-- dateChoose
+- avaialabilityChoose
 - greet
 - stop
 - fetch_meetings
@@ -17,13 +17,12 @@ intents:
 - howareyou
 - utter_ask_howcanhelp
 entities:
-- date
+- avaialability
 - room
 - time
 slots:
-  date:
+  avaialability:
     type: unfeaturized
-    auto_fill: false
   room:
     type: unfeaturized
   time:

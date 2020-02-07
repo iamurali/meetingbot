@@ -37,6 +37,8 @@ from timefhuman import timefhuman
 import requests
 from rasa_sdk.events import SlotSet
 from rasa_sdk.forms import FormAction
+from datetime import datetime
+from datetime import timedelta
 
 logger = logging.getLogger(__name__)
 
@@ -84,7 +86,7 @@ class ActionAskMeetingdate(Action):
 
   def run(self, dispatcher, tracker, domain):
     message_title = 'Please choose Meeting Date'
-    event_dates = [{"title": "21/02/2020", "payload": '/dateChoose{"date": "21/02/2020"}'}, {"title": "22/02/2020", "payload": '/dateChoose{"date": "22/02/2020"}'}]
+    event_dates = [{"title": "21/02/2020", "payload": '/avaialabilityChoose{"avaialability": "21/02/2020"}'}, {"title": "22/02/2020", "payload": '/avaialabilityChoose{"avaialability": "22/02/2020"}'}]
     dispatcher.utter_message(text=message_title, buttons=event_dates)
     return []
 
@@ -94,9 +96,8 @@ class ActionAskMeetingTime(Action):
 
   def run(self, dispatcher, tracker, domain):
     message_title = 'Please choose Meeting time'
-    event_dates = [{"title": "21:00", "payload": '/timeChoose{"time": "22:00"}'}, {"title": "22:00", "payload": '/timeChoose{"time": "22:00"}'}]
-    # dispatcher.utter_message(text=message_title, buttons=event_dates)
-    dispatcher.utter_message(text=message_title)
+    meeting_times = [{"title": "21:00", "payload": '/timeChoose{"time": "22:00"}'}, {"title": "22:00", "payload": '/timeChoose{"time": "22:00"}'}]
+    dispatcher.utter_message(text=message_title, buttons=meeting_times)
     return []
 
 class ActionFetchRooms(Action):
@@ -116,29 +117,33 @@ class ActionCreateMeeting(Action):
     return 'action_create_meeting'
 
   def run(self, dispatcher, tracker, domain):
-    print("pringint message", tracker.get_slot('date'))
-    msg = "meeting time" + tracker.get_slot('time') + "room: " + tracker.get_slot('room')
+    print("pringint message", tracker.get_slot('avaialability'))
+    date = tracker.get_slot("avaialability")
+    room = tracker.get_slot('room')
+    time = tracker.get_slot('time')
+    date_time = date + " " + time
+    start_time = datetime.strptime(date_time, '%d/%m/%Y %H:%M')
+    end_time = start_time + timedelta(minutes=30)
+    meeting_create_url = "https://light.jntesting.net/mergetest/meeting_request/create"
+    request_params = {
+      "api_params": {
+        "meeting_request": {
+          "activity_uuid": "Gp72-KVfWIBz6rmsDT1q8A",
+          "meeting_with": "test",
+          "start_time": start_time,
+          "end_time": end_time,
+          "location_preference": {},
+          "custom_fields": {
+            "meeting_with": "test"
+          },
+          "requestor": "lbxqoATuWUPNsLcNlOdOqg",
+          "room_uuid": "GPzzNyYctUTsZdgaDE61yg"
+        }
+      }
+    }
+
+    print(request_params, 'meeting_request params')
+
     dispatcher.utter_message(msg)
+
     return []
-
-# class MeetingRequestForm(FormAction):
-#   def name(self):
-#     return 'meeting_request_form'
-
-#   @staticmethod
-#   def required_slots(tracker: Tracker) -> List[Text]:
-#     return ['date', 'time']
-
-
-#   def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-#     return {
-#       "date": self.from_entity(entity="date"),
-#       "time": self.from_entity(entity="time")
-#     }
-
-#   def submit(self, dispatcher: CollectingDispatcher,
-#                tracker: Tracker,
-#                domain: Dict[Text, Any]) -> List[Dict]:
-#         logger.info(tracker)
-#         dispatcher.utter_template('utter_submit', tracker)
-#         return []
