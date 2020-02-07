@@ -175,15 +175,6 @@ class ActionAskMeetingTime(Action):
     return 'action_ask_meetingtime'
 
   def run(self, dispatcher, tracker, domain):
-
-  # book_meeting: "true"
-  # activity_uuid: "Gp72-KVfWIBz6rmsDT1q8A"
-  # location_preference: {}
-  # include_unavailable_resources: true
-
-
-
-
     message_title = 'Please choose Meeting time'
     meeting_times = [{"title": "21:00", "payload": '/timeChoose{"time": "22:00"}'}, {"title": "22:00", "payload": '/timeChoose{"time": "22:00"}'}]
     dispatcher.utter_message(text=message_title, buttons=meeting_times)
@@ -195,7 +186,29 @@ class ActionFetchRooms(Action):
 
   def run(self, dispatcher, tracker, domain):
     message_title = 'Please choose Meeting time'
-    rooms = [{"title": "Room1", "payload": '/roomChoose{"room": "room1"}'}, {"title": "room2", "payload": '/roomChoose{"room": "Room2"}'}]
+    event_date = tracker.get_slot("avaialability")
+
+    #event_date = "07-02-2020"
+    start_time = int(float(tracker.get_slot("time")))
+    end_time = start_time + 30
+
+    base_url = "https://light.jntesting.net/api/mergetest/activities_rooms?activity_uuid=Gp72-KVfWIBz6rmsDT1q8A"
+    params = "&event_date=" + event_date + "&start_time=" + start_time + "&end_time=" + end_time
+    url = base_url + params
+
+    response = CompanyClient().get(url, {}, "harshal.jain@jifflenow.com")
+    rooms_data = response["data"]["activity"]["rooms"]
+    rooms = {}
+    if rooms_data is not None:
+      for room in rooms_data:
+        _h = {}
+        _h["title"] = room["name"]
+        _h["payload"] = '/roomChoose{"room": ' + '"' + room["uuid"] + '"}'
+        rooms.append(_h)
+    else:
+      rooms = "No Rooms found !! :("
+
+    #rooms = [{"title": "Room1", "payload": '/roomChoose{"room": "room1"}'}, {"title": "room2", "payload": '/roomChoose{"room": "Room2"}'}]
     print("pringint message", rooms)
     dispatcher.utter_message(text=message_title, buttons=rooms)
     return []
