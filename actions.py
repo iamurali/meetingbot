@@ -66,7 +66,8 @@ def headers(email):
      'X-Meeting-Bot-Token': _creds['slack']['slack_token'],
      'X-Meeting-Bot-User-Emailid': "harshal.jain@jifflenow.com",
      'X-Mobile-User-UUID': "A-Ub9LsfZfR5ZS12E1oGmA",
-     'content-type': 'application/json'
+     'Content-Type': 'application/json',
+     'authorization': 'JN-Token fdb59b337709a7640346e3b2299ecae763fe5bf8'
    }
   return headers
 
@@ -175,9 +176,23 @@ class ActionAskMeetingTime(Action):
     return 'action_ask_meetingtime'
 
   def run(self, dispatcher, tracker, domain):
+    meeting_time_url = "https://light.jntesting.net/external-request/mergetest/api/meeting-types/Gp72-KVfWIBz6rmsDT1q8A/calendar?duration=45"
+    date = tracker.get_slot("avaialability")
+    date = datetime.strptime(date, "%d/%m/%Y").strftime("%Y-%m-%d")
     message_title = 'Please choose Meeting time'
-    meeting_times = [{"title": "21:00", "payload": '/timeChoose{"time": "22:00"}'}, {"title": "22:00", "payload": '/timeChoose{"time": "22:00"}'}]
-    dispatcher.utter_message(text=message_title, buttons=meeting_times)
+    time_slots = []
+    response = CompanyClient().get(meeting_time_url, {}, '')
+    for timeslot in response['data'][date]:
+      display_label = datetime.strptime(timeslot, '%H:%M')
+      t2 = datetime(1900,1,1)
+      seconds = (display_label-t2).total_seconds()
+      value = seconds / 60
+      _h = {}
+      _h["title"] = timeslot
+      _h["payload"] = '/timeChoose{"time":' + '"' + str(value) + '"}'
+      time_slots.append(_h)
+
+    dispatcher.utter_message(text=message_title, buttons=time_slots)
     return []
 
 class ActionFetchRooms(Action):
@@ -193,12 +208,12 @@ class ActionFetchRooms(Action):
     end_time = start_time + 30
 
     base_url = "https://light.jntesting.net/api/mergetest/activities_rooms?activity_uuid=Gp72-KVfWIBz6rmsDT1q8A"
-    params = "&event_date=" + event_date + "&start_time=" + start_time + "&end_time=" + end_time
+    params = "&event_date=" + event_date + "&start_time=" + str(start_time) + "&end_time=" + str(end_time)
     url = base_url + params
 
     response = CompanyClient().get(url, {}, "harshal.jain@jifflenow.com")
     rooms_data = response["data"]["activity"]["rooms"]
-    rooms = {}
+    rooms = []
     if rooms_data is not None:
       for room in rooms_data:
         _h = {}
@@ -206,10 +221,10 @@ class ActionFetchRooms(Action):
         _h["payload"] = '/roomChoose{"room": ' + '"' + room["uuid"] + '"}'
         rooms.append(_h)
     else:
-      rooms = "No Rooms found !! :("
+      message_title = 'No rooms'
+      rooms = []
 
     #rooms = [{"title": "Room1", "payload": '/roomChoose{"room": "room1"}'}, {"title": "room2", "payload": '/roomChoose{"room": "Room2"}'}]
-    print("pringint message", rooms)
     dispatcher.utter_message(text=message_title, buttons=rooms)
     return []
 
@@ -218,15 +233,21 @@ class ActionCreateMeeting(Action):
   def name(self):
     return 'action_create_meeting'
 
+  def convert(self, minutes):
+    hours, minutes = divmod(minutes, 60)
+    return "%02d:%02d" % (hours, minutes)
+
   def run(self, dispatcher, tracker, domain):
     print("pringint message", tracker.get_slot('avaialability'))
     date = tracker.get_slot("avaialability")
     room = tracker.get_slot('room')
-    time = tracker.get_slot('time')
+    time = int(float(tracker.get_slot('time')))
+    time = self.convert(time)
+
     date_time = date + " " + time
     start_time = datetime.strptime(date_time, '%d/%m/%Y %H:%M')
     end_time = start_time + timedelta(minutes=30)
-
+    meeting_with = "test"
     start_time = start_time.strftime("%Y/%m/%d %I:%M %p")
     end_time = end_time.strftime("%Y/%m/%d %I:%M %p")
 
@@ -235,12 +256,12 @@ class ActionCreateMeeting(Action):
       "api_params": {
         "meeting_request": {
           "activity_uuid": "Gp72-KVfWIBz6rmsDT1q8A",
-          "meeting_with": "test",
+          "meeting_with": meeting_with,
           "start_time": start_time,
           "end_time": end_time,
           "location_preference": {},
           "custom_fields": {
-            "meeting_with": "test"
+            "meeting_with": meeting_with
           },
           "requestor": "lbxqoATuWUPNsLcNlOdOqg",
           "room_uuid": "GPzzNyYctUTsZdgaDE61yg"
@@ -250,7 +271,8 @@ class ActionCreateMeeting(Action):
     response = CompanyClient().post(meeting_create_url, json.dumps(request_params), '')
 
     msg = "Meeting created successfully with details: \n"
-    msg = msg + "Meeting with: "
+    msg = msg + "Meeting with: " + meeting_with
+
     dispatcher.utter_message("Meeting created successfully.")
     return []
 
