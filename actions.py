@@ -73,10 +73,7 @@ def headers(email):
 def getMeetings(tracker):
   # user_name, email = fetchUser(tracker)
   user_name, email = "asda", "asdasd"
-
   message = tracker.latest_message['text']
-
-  print(message)
   date = timefhuman(message).strftime("%Y-%m-%d")
   base_url = "https://light.jntesting.net/api/portal/calendar/users?"
   params = "api_params[user_email]=" + "delhi.ganesan@jifflenow.info" + "&api_params[calendar_start_date]=" + str(date) +  "&api_params[calendar_end_date]=" + str(date)
@@ -187,7 +184,11 @@ class ActionCreateMeeting(Action):
     date_time = date + " " + time
     start_time = datetime.strptime(date_time, '%d/%m/%Y %H:%M')
     end_time = start_time + timedelta(minutes=30)
-    meeting_create_url = "https://light.jntesting.net/mergetest/meeting_request/create"
+
+    start_time = start_time.strftime("%Y/%m/%d %I:%M %p")
+    end_time = end_time.strftime("%Y/%m/%d %I:%M %p")
+
+    meeting_create_url = "https://light.jntesting.net/api/mergetest/meeting_request/create"
     request_params = {
       "api_params": {
         "meeting_request": {
@@ -204,20 +205,18 @@ class ActionCreateMeeting(Action):
         }
       }
     }
+    response = CompanyClient().post(meeting_create_url, json.dumps(request_params), '')
 
-    print(request_params, 'meeting_request params')
-
-    dispatcher.utter_message(msg)
-
+    msg = "Meeting created successfully with details: \n"
+    msg = msg + "Meeting with: "
+    dispatcher.utter_message("Meeting created successfully.")
     return []
 
 class CompanyClient():
-
   def post(self, url, data, email):
     response = requests.post(url, data=data, headers=headers(email)).json()
     return response
   def get(self, url, data, email):
     response = requests.get(url, params=data, headers=headers(email))
-
     response = response.json()
     return response
