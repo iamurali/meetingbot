@@ -105,3 +105,14 @@
 - who is my customers today?
 - who am i meeting tomorrow
 - Which client i'm meeting on Feb 09 2020?
+
+## intent:request_meeting
+- i am looking to schedule a meeting
+- make an appointment
+- arrange a meeting
+- I want to schedule a meeting
+- please schedule a meeting
+- schedule a meeting
+- please schedule new meeting
+- i would like to have new appoinment
+- please schdule new meeting

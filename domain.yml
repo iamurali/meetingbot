@@ -1,15 +1,14 @@
-actions:
-- action_fetch_meetings
-- action_fetch_my_customer
-- utter_ask_howcanhelp
-- utter_botgood
-- utter_cheer_up
-- utter_goodbye
-- utter_greet
+session_config:
+  session_expiration_time: 60.0
+  carry_over_slots_to_new_session: true
 intents:
-- who_all_am_i_meeting
-- utter_ask_howcanhelp
+- timeChoose
+- roomChoose
+- request_meeting
+- avaialabilityChoose
 - greet
+- who_all_am_i_meeting
+- stop
 - fetch_meetings
 - sad
 - affirm
@@ -17,8 +16,18 @@ intents:
 - deny
 - iamgood
 - howareyou
-- stop
 - utter_ask_howcanhelp
+entities:
+- avaialability
+- room
+- time
+slots:
+  avaialability:
+    type: unfeaturized
+  room:
+    type: unfeaturized
+  time:
+    type: unfeaturized
 responses:
   utter_ask_howcanhelp:
   - text: How can i help you?
@@ -37,6 +46,10 @@ responses:
   utter_cheer_up:
   - image: https://i.imgur.com/nGF1K8f.jpg
     text: 'Here is something to cheer you up:'
+  utter_default:
+  - text: Totes soz, I don't understand what you mean there, can you rephrase please?
+  utter_choose_room:
+  - text: please choose room
   utter_goodbye:
   - text: Bye
   - text: goodbye
@@ -49,10 +62,17 @@ responses:
   - text: How are you doing?
   - text: How you doing?
   - text: Helloww! How are you doing today?
-session_config:
-  carry_over_slots_to_new_session: true
-  session_expiration_time: 60
-slots:
-  date:
-    auto_fill: false
-    type: unfeaturized
+actions:
+- action_ask_meetingdate
+- action_ask_meetingtime
+- action_fetch_my_customer
+- action_create_meeting
+- action_fetch_meetings
+- action_fetch_rooms
+- utter_choose_room
+- utter_ask_howcanhelp
+- utter_botgood
+- utter_cheer_up
+- utter_default
+- utter_goodbye
+- utter_greet

@@ -3,3 +3,6 @@ ngrok
 __pycache__/*
 story_graph.dot
 # models/*
+models/*
+*.db*
+*.dot
