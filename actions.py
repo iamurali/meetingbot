@@ -34,12 +34,12 @@ import pprint, json
 from rasa_sdk import Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from timefhuman import timefhuman
-from slackclient import SlackClient
 import requests
 import yaml
 from rasa_sdk.events import SlotSet
 from datetime import datetime
 from datetime import timedelta
+from requests.models import PreparedRequest
 
 logger = logging.getLogger(__name__)
 from pprint import pprint
@@ -55,7 +55,6 @@ def fetchUser(tracker):
   _creds = credentials()
   url = "https://slack.com/api/users.profile.get"
   userinfo = CompanyClient().post(url, {"token": _creds['slack']['slack_token'], "user": username}, '')
-  print("ssssssss")
   emailid = userinfo['profile']['email']
   print(emailid)
   return username, emailid
@@ -65,7 +64,7 @@ def headers(email):
   headers = {
      'X-Meeting-Bot-Token': _creds['slack']['slack_token'],
      'X-Meeting-Bot-User-Emailid': "harshal.jain@jifflenow.com",
-     'X-Mobile-User-UUID': "A-Ub9LsfZfR5ZS12E1oGmA",
+     'X-Mobile-User-UUID': "lbxqoATuWUPNsLcNlOdOqg",
      'Content-Type': 'application/json',
      'authorization': 'JN-Token fdb59b337709a7640346e3b2299ecae763fe5bf8'
    }
@@ -141,18 +140,55 @@ class ActionFetchMeetings(Action):
     dispatcher.utter_message(msg)
     return []
 
+class action_ask_event(Action):
+  def name(self):
+    return 'action_ask_event'
+
+
+  def run(self, dispatcher, tracker, domain):
+    message_title = 'Please choose event'
+    all_events = []
+    event_url = 'https://light.jntesting.net/api/portal/users_events?page=self_serve'
+    response = CompanyClient().get(event_url, {}, '')
+    for event in response["data"]["events"]:
+      if event['status'] == 'LIVE':
+        _h = {}
+        _h["title"] = event["event_name"]
+        _h["payload"] = '/eventChoose{"event": ' + '"' + event["event_system_name"] + '"}'
+        all_events.append(_h)
+
+    dispatcher.utter_message(text=message_title, buttons=all_events)
+    return []
+
+class ActionAskMeetingtype(Action):
+  def name(self):
+    return 'action_ask_meetingtype'
+
+  def run(self, dispatcher, tracker, domain):
+    event_system_name = tracker.get_slot('event')
+    message_title = 'Please choose Meeting type'
+    meeting_types = []
+    meeting_type_url = "https://light.jntesting.net/api/" + event_system_name + "/get_activities?entityType=MeetingRequest&per_page=10000"
+
+    response = CompanyClient().get(meeting_type_url, {}, '')
+    print(response)
+    for activity in response['data']['activities']:
+      _h = {}
+      _h["title"] = activity["display_name"]
+      _h["payload"] = '/meetingtypeChoose{"meetingtype": ' + '"' + activity["uuid"] + '"}'
+      meeting_types.append(_h)
+    dispatcher.utter_message(text=message_title, buttons=meeting_types)
+    return []
+
 class ActionAskMeetingdate(Action):
   def name(self):
     return 'action_ask_meetingdate'
 
   def run(self, dispatcher, tracker, domain):
     message_title = 'Please choose Meeting Date'
-
-    url = "https://light.jntesting.net/api/mergetest/event_info?basic_info=true"
+    event_system_name = tracker.get_slot('event')
+    url = "https://light.jntesting.net/api/" + event_system_name + "/event_info?basic_info=true"
     response = CompanyClient().get(url, {}, "harshal.jain@jifflenow.com")
-
-    #event_dates = [{"title": "21/02/2020", "payload": '/avaialabilityChoose{"avaialability": "21/02/2020"}'}, {"title": "22/02/2020", "payload": '/avaialabilityChoose{"avaialability": "22/02/2020"}'}]
-
     start_date = response["data"]["event"]["start_date"]
     start_date = datetime.strptime(start_date, '%Y-%m-%d')
 
@@ -176,11 +212,14 @@ class ActionAskMeetingTime(Action):
     return 'action_ask_meetingtime'
 
   def run(self, dispatcher, tracker, domain):
-    meeting_time_url = "https://light.jntesting.net/external-request/mergetest/api/meeting-types/Gp72-KVfWIBz6rmsDT1q8A/calendar?duration=45"
+    event_system_name = tracker.get_slot('event')
+    meeting_type = tracker.get_slot('meetingtype')
     date = tracker.get_slot("avaialability")
+    meeting_time_url = "https://light.jntesting.net/external-request/"+ event_system_name +"/api/meeting-types/" + meeting_type +"/calendar?duration=45"
     date = datetime.strptime(date, "%d/%m/%Y").strftime("%Y-%m-%d")
     message_title = 'Please choose Meeting time'
     time_slots = []
+    print('meeting timeslot url', meeting_time_url)
     response = CompanyClient().get(meeting_time_url, {}, '')
     for timeslot in response['data'][date]:
       display_label = datetime.strptime(timeslot, '%H:%M')
@@ -200,18 +239,18 @@ class ActionFetchRooms(Action):
     return 'action_fetch_rooms'
 
   def run(self, dispatcher, tracker, domain):
-    message_title = 'Please choose Meeting time'
+    message_title = 'Please choose Meeting room'
+    event_system_name = tracker.get_slot('event')
     event_date = tracker.get_slot("avaialability")
-
+    meeting_type = tracker.get_slot('meetingtype')
     #event_date = "07-02-2020"
     start_time = int(float(tracker.get_slot("time")))
     end_time = start_time + 30
 
-    base_url = "https://light.jntesting.net/api/mergetest/activities_rooms?activity_uuid=Gp72-KVfWIBz6rmsDT1q8A"
+    base_url = "https://light.jntesting.net/api/"+ event_system_name +"/activities_rooms?activity_uuid="+ meeting_type
     params = "&event_date=" + event_date + "&start_time=" + str(start_time) + "&end_time=" + str(end_time)
     url = base_url + params
-
-    response = CompanyClient().get(url, {}, "harshal.jain@jifflenow.com")
+    response = CompanyClient().get(url, {}, '')
     rooms_data = response["data"]["activity"]["rooms"]
     rooms = []
     if rooms_data is not None:
@@ -238,24 +277,26 @@ class ActionCreateMeeting(Action):
     return "%02d:%02d" % (hours, minutes)
 
   def run(self, dispatcher, tracker, domain):
-    print("pringint message", tracker.get_slot('avaialability'))
+    event_system_name = tracker.get_slot("event")
+    meetingtype = tracker.get_slot("meetingtype")
     date = tracker.get_slot("avaialability")
+
     room = tracker.get_slot('room')
+    meeting_with = "test"
     time = int(float(tracker.get_slot('time')))
     time = self.convert(time)
 
     date_time = date + " " + time
     start_time = datetime.strptime(date_time, '%d/%m/%Y %H:%M')
     end_time = start_time + timedelta(minutes=30)
-    meeting_with = "test"
     start_time = start_time.strftime("%Y/%m/%d %I:%M %p")
     end_time = end_time.strftime("%Y/%m/%d %I:%M %p")
 
-    meeting_create_url = "https://light.jntesting.net/api/mergetest/meeting_request/create"
+    meeting_create_url = "https://light.jntesting.net/api/"+ event_system_name +"/meeting_request/create"
     request_params = {
       "api_params": {
         "meeting_request": {
-          "activity_uuid": "Gp72-KVfWIBz6rmsDT1q8A",
+          "activity_uuid": meetingtype,
           "meeting_with": meeting_with,
           "start_time": start_time,
           "end_time": end_time,
@@ -264,16 +305,17 @@ class ActionCreateMeeting(Action):
             "meeting_with": meeting_with
           },
           "requestor": "lbxqoATuWUPNsLcNlOdOqg",
-          "room_uuid": "GPzzNyYctUTsZdgaDE61yg"
+          "room_uuid": room
         }
       }
     }
+    print(request_params)
     response = CompanyClient().post(meeting_create_url, json.dumps(request_params), '')
-
+    print(response)
     msg = "Meeting created successfully with details: \n"
     msg = msg + "Meeting with: " + meeting_with
 
-    dispatcher.utter_message("Meeting created successfully.")
+    dispatcher.utter_message(msg)
     return []
 
 class CompanyClient():

@@ -2,8 +2,10 @@ session_config:
   session_expiration_time: 60.0
   carry_over_slots_to_new_session: true
 intents:
+- eventChoose
 - timeChoose
 - roomChoose
+- meetingtypeChoose
 - request_meeting
 - avaialabilityChoose
 - greet
@@ -19,9 +21,18 @@ intents:
 - utter_ask_howcanhelp
 entities:
 - avaialability
+- meetingtype
 - room
 - time
+- event
+- meetingwith
 slots:
+  event:
+    type: unfeaturized
+  meetingwith:
+    type: text
+  meetingtype:
+    type: unfeaturized
   avaialability:
     type: unfeaturized
   room:
@@ -29,6 +40,9 @@ slots:
   time:
     type: unfeaturized
 responses:
+  utter_ask_meetingwith:
+  - text: Whom you want to meet ?
+  - text: Prospect you want to meet ?
   utter_ask_howcanhelp:
   - text: How can i help you?
   - text: In what ways can I help?
@@ -63,6 +77,8 @@ responses:
   - text: How you doing?
   - text: Helloww! How are you doing today?
 actions:
+- action_ask_event
+- action_ask_meetingtype
 - action_ask_meetingdate
 - action_ask_meetingtime
 - action_fetch_my_customer
@@ -76,3 +92,4 @@ actions:
 - utter_default
 - utter_goodbye
 - utter_greet
+- utter_ask_meetingwith

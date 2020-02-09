@@ -118,6 +118,12 @@
 * greet
   - utter_greet
 * request_meeting
+  - action_ask_event
+* eventChoose{"event": "mwc2021"}
+  - slot{"event": "mwc2021"}
+  - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+  - slot{"meetingtype": "xzy"}
   - action_ask_meetingdate
 * avaialabilityChoose{"avaialability": "02-01-2020"}
   - slot{"avaialability": "02-01-2020"}
@@ -133,6 +139,12 @@
 * greet
   - utter_greet
 * request_meeting
+  - action_ask_event
+* eventChoose{"event": "mwc2021"}
+  - slot{"event": "mwc2021"}
+  - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+  - slot{"meetingtype": "xzy"}
   - action_ask_meetingdate
 * avaialabilityChoose{"avaialability": "02-01-2020"}
   - slot{"avaialability": "02-01-2020"}
@@ -146,6 +158,12 @@
 
 ## Date time
 * request_meeting
+  - action_ask_event
+* eventChoose{"event": "mwc2021"}
+  - slot{"event": "mwc2021"}
+  - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+  - slot{"meetingtype": "xzy"}
   - action_ask_meetingdate
 * avaialabilityChoose{"avaialability": "02-01-2020"}
   - slot{"avaialability": "02-01-2020"}
@@ -159,6 +177,12 @@
 
 ## interactive_story_1
 * request_meeting
+    - action_ask_event
+* eventChoose{"event": "mwc2021"}
+    - slot{"event": "mwc2021"}
+    - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+    - slot{"meetingtype": "xzy"}
     - action_ask_meetingdate
 * avaialabilityChoose{"avaialability": "02-01-2020"}
     - slot{"avaialability": "02-01-2020"}
@@ -172,6 +196,12 @@
 
 ## interactive_story_1
 * request_meeting
+    - action_ask_event
+* eventChoose{"event": "mwc2021"}
+    - slot{"event": "mwc2021"}
+    - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+    - slot{"meetingtype": "xzy"}
     - action_ask_meetingdate
 * avaialabilityChoose{"avaialability": "02-01-2020"}
     - slot{"avaialability": "02-01-2020"}
@@ -185,6 +215,12 @@
 
 ## interactive_story_1
 * request_meeting
+    - action_ask_event
+* eventChoose{"event": "mwc2021"}
+    - slot{"event": "mwc2021"}
+    - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+    - slot{"meetingtype": "xzy"}
     - action_ask_meetingdate
 * avaialabilityChoose{"avaialability": "02-01-2020"}
     - slot{"avaialability": "02-01-2020"}
@@ -197,32 +233,12 @@
 
 ## interactive_story_1
 * request_meeting
-    - action_ask_meetingdate
-* avaialabilityChoose{"avaialability": "02-01-2020"}
-    - slot{"avaialability": "02-01-2020"}
-    - action_ask_meetingtime
-* timeChoose{"time": "22:00"}
-    - slot{"time": "22:00"}
-    - action_fetch_rooms
-* roomChoose{"room": "Room2"}
-    - slot{"room": "Room2"}
-    - action_create_meeting
-
-## interactive_story_1
-* request_meeting
-    - action_ask_meetingdate
-* avaialabilityChoose{"avaialability": "02-01-2020"}
-    - slot{"avaialability": "02-01-2020"}
-    - action_ask_meetingtime
-* timeChoose{"time": "22:00"}
-    - slot{"time": "22:00"}
-    - action_fetch_rooms
-* roomChoose{"room": "Room2"}
-    - slot{"room": "Room2"}
-    - action_create_meeting
-
-## interactive_story_1
-* request_meeting
+    - action_ask_event
+* eventChoose{"event": "mwc2021"}
+    - slot{"event": "mwc2021"}
+    - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+    - slot{"meetingtype": "xzy"}
     - action_ask_meetingdate
 * avaialabilityChoose{"avaialability": "02-01-2020"}
     - slot{"avaialability": "02-01-2020"}
@@ -236,6 +252,50 @@
 
 ## interactive_story_1
 * request_meeting
+    - action_ask_event
+* eventChoose{"event": "mwc2021"}
+    - slot{"event": "mwc2021"}
+    - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+    - slot{"meetingtype": "xzy"}
+    - action_ask_meetingdate
+* avaialabilityChoose{"avaialability": "02-01-2020"}
+    - slot{"avaialability": "02-01-2020"}
+    - action_ask_meetingtime
+* timeChoose{"time": "22:00"}
+    - slot{"time": "22:00"}
+    - action_fetch_rooms
+* roomChoose{"room": "Room2"}
+    - slot{"room": "Room2"}
+    - action_create_meeting
+
+## interactive_story_1
+* request_meeting
+    - action_ask_event
+* eventChoose{"event": "mwc2021"}
+    - slot{"event": "mwc2021"}
+    - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+    - slot{"meetingtype": "xzy"}
+    - action_ask_meetingdate
+* avaialabilityChoose{"avaialability": "02-01-2020"}
+    - slot{"avaialability": "02-01-2020"}
+    - action_ask_meetingtime
+* timeChoose{"time": "22:00"}
+    - slot{"time": "22:00"}
+    - action_fetch_rooms
+* roomChoose{"room": "Room2"}
+    - slot{"room": "Room2"}
+    - action_create_meeting
+
+## interactive_story_1
+* request_meeting
+    - action_ask_event
+* eventChoose{"event": "mwc2021"}
+    - slot{"event": "mwc2021"}
+    - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+    - slot{"meetingtype": "xzy"}
     - action_ask_meetingdate
 * avaialabilityChoose{"avaialability": "02-01-2020"}
     - slot{"avaialability": "02-01-2020"}
@@ -249,6 +309,12 @@
 
 ## interactive_story_1
 * request_meeting
+    - action_ask_event
+* eventChoose{"event": "mwc2021"}
+    - slot{"event": "mwc2021"}
+    - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+    - slot{"meetingtype": "xzy"}
     - action_ask_meetingdate
 * avaialabilityChoose{"avaialability": "02-01-2020"}
     - slot{"avaialability": "02-01-2020"}
@@ -262,6 +328,12 @@
 
 ## interactive_story_1
 * request_meeting
+    - action_ask_event
+* eventChoose{"event": "mwc2021"}
+    - slot{"event": "mwc2021"}
+    - action_ask_meetingtype
+* meetingtypeChoose{"meetingtype": "xyz"}
+    - slot{"meetingtype": "xzy"}
     - action_ask_meetingdate
 * avaialabilityChoose{"avaialability": "02-01-2020"}
     - slot{"avaialability": "02-01-2020"}
