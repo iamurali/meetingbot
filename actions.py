@@ -140,7 +140,7 @@ class ActionFetchMeetings(Action):
     dispatcher.utter_message(msg)
     return []
 
-class action_ask_event(Action):
+class ActionAskEvent(Action):
   def name(self):
     return 'action_ask_event'
 
