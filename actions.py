@@ -63,10 +63,10 @@ def headers(email):
   _creds = credentials()
   headers = {
      'X-Meeting-Bot-Token': _creds['slack']['slack_token'],
-     'X-Meeting-Bot-User-Emailid': "harshal.jain@jifflenow.com",
-     'X-Mobile-User-UUID': "lbxqoATuWUPNsLcNlOdOqg",
+     'X-Meeting-Bot-User-Emailid': "<email of the user>",
+     'X-Mobile-User-UUID': "<user_uuid>",
      'Content-Type': 'application/json',
-     'authorization': 'JN-Token fdb59b337709a7640346e3b2299ecae763fe5bf8'
+     'authorization': '<Token>'
    }
   return headers
 
@@ -76,7 +76,7 @@ def getMeetings(tracker):
   message = tracker.latest_message['text']
   date = timefhuman(message).strftime("%Y-%m-%d")
   base_url = "https://light.jntesting.net/api/portal/calendar/users?"
-  params = "api_params[user_email]=" + "delhi.ganesan@jifflenow.info" + "&api_params[calendar_start_date]=" + str(date) +  "&api_params[calendar_end_date]=" + str(date)
+  params = "api_params[user_email]=" + "<email_address>" + "&api_params[calendar_start_date]=" + str(date) +  "&api_params[calendar_end_date]=" + str(date)
 
   url = base_url + params
   # base_url = compamy_url() + "/api/portal/calendar/users?"
@@ -188,7 +188,7 @@ class ActionAskMeetingdate(Action):
     message_title = 'Please choose Meeting Date'
     event_system_name = tracker.get_slot('event')
     url = "https://light.jntesting.net/api/" + event_system_name + "/event_info?basic_info=true"
-    response = CompanyClient().get(url, {}, "harshal.jain@jifflenow.com")
+    response = CompanyClient().get(url, {}, "<email>")
     start_date = response["data"]["event"]["start_date"]
     start_date = datetime.strptime(start_date, '%Y-%m-%d')
 
@@ -312,8 +312,8 @@ class ActionCreateMeeting(Action):
     print(request_params)
     response = CompanyClient().post(meeting_create_url, json.dumps(request_params), '')
     print(response)
-    msg = "Meeting created successfully with details: \n"
-    msg = msg + "Meeting with: " + meeting_with
+    msg = "Meeting created successfully.\n"
+    # msg = msg + "Meeting with: " + meeting_with
 
     dispatcher.utter_message(msg)
     return []

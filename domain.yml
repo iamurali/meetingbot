@@ -27,14 +27,14 @@ entities:
 - event
 - meetingwith
 slots:
+  avaialability:
+    type: unfeaturized
   event:
+    type: unfeaturized
+  meetingtype:
     type: unfeaturized
   meetingwith:
     type: text
-  meetingtype:
-    type: unfeaturized
-  avaialability:
-    type: unfeaturized
   room:
     type: unfeaturized
   time:
